@@ -10,29 +10,17 @@
 	display: none;
 	margin-top: 0px;
 }
-	.checkbox-item
-	{
-		padding: 10px;
-	}
-	.dropdown-menu
-	{
-		padding: 10px !important;
-	}
-.red {
-	background: #ff0000;
+.checkbox-item {
+	padding: 10px;
 }
-.lastname {
-	background: #228B22;
-}
-.blue {
-	background: #0000ff;
+.dropdown-menu {
+	padding: 10px !important;
 }
 label {
 	margin-right: 15px;
 }
 </style>
 <!--<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>-->
-
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -42,31 +30,23 @@ label {
 
 <!-- Latest compiled JavaScript -->
 
-
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript">
+
 $(document).ready(function(){
-	$(document).click( function(event){
-		 event.stopPropagation();
-    $('.dropdown-menu').hide();
+    
+    cutomize();
+    $(document).on('click.bs.dropdown.data-api', '.dropdown.keep-inside-clicks-open', function (e) {
+  e.stopPropagation();
 });
-	$('.dropdown').click(function(event){
-		//$('.custom').select= true;
-		event.stopPropagation();
-		$('.dropdown-menu').show();
-		//$( ".custom").click();
-		//cutomize();
-	})
-	
+
  function cutomize()
 	{
 		var inputValue = $('input[type="checkbox"]');
 		
-		    // console.log(inputValue);
-
-                   $.each((inputValue), function(){
+		         $.each((inputValue), function(){
 	               
-	
-                      if($(this).attr('name') == 'firstname')
+                  if($(this).attr('name') === 'firstname')
 						{
 							
 					    //alert('true');
@@ -74,29 +54,32 @@ $(document).ready(function(){
 						 var rc = $(this).attr("value");
 		               	 $("." + rc).show();
 		
-							
+						
 							
 							
 						}
 					    else
 							{
+                               // alert('false');
 									$(this).prop('checked', false);
 								 var rc = $(this).attr("value");
 							
 								  	 $("." + rc).hide();
 		
 							}
+                      
+                      
 	});
 	}
+    
+    
+    
 		$('.custom').click(function(event){
 	      event.stopPropagation();
 			cutomize();
+            
     });
-	
-	
-	
-	
-	
+
 	$('.all').click(function(event){
 	
 	   event.stopPropagation();
@@ -114,21 +97,18 @@ $(document).ready(function(){
 		
     });
 	
-	
-	
-	
-	
+
     $('input[type="checkbox"]').click(function(){
 		
- alert('hi alert');
-		var inputValue = $(this).attr("value");
+
+		var inputValues = $(this).attr("value");
 		
-		console.log(inputValue);
+		console.log(inputValues);
 		
 		
 
-				 $("." + inputValue).toggle();
-		
+				 $("." + inputValues).toggle();
+		  
 		
     });
 	
@@ -139,56 +119,63 @@ $(document).ready(function(){
 </head>
 <body>
 <div class="container">
-
-<div class="dropdown">
-  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
-  <span class="caret"></span></button>
-   
-  
-  <div class="dropdown-menu">
-      Show Fields: 
-	   <a href="#" class="all">All</a>
-	   <a href="#"  class="custom"> Custom</a> 
- <div class="checkbox-item">
-
-  <label>
-    <input type="checkbox" name="firstname" value="firstname">
-    Firstname</label>
-  <label>
-    <input type="checkbox" name="colorCheckbox" value="lastname">
-   Lastname</label>
-  <label>
-    <input type="checkbox" name="colorCheckbox" value="address">
-    Address</label>
-</div>
- 
- <div class="firstname box">
-<label> FirstName </label><br>
-  <input type="text">
-
-
-</div>
-<div class="lastname box">
-	
-	<label> Lastname </label><br>
-  <input type="text">
-	
-</div>
-<div class="address box">
-	<label> Address </label><br>
-  <input type="text">
-</div>
-  
- 
+  <div class="dropdown keep-inside-clicks-open">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Configure Fields <span class="caret"></span></button>
+    <div class="dropdown-menu"> Show Fields: <a href="#" class="all">All</a> <a href="#"  class="custom"> Custom</a>
+      <div class="checkbox-item">
+        <label>
+          <input type="checkbox" name="firstname" value="firstname">
+          Firstname</label>
+        <label>
+          <input type="checkbox" name="colorCheckbox" value="lastname">
+          Lastname</label>
+        <label>
+          <input type="checkbox" name="colorCheckbox" value="address">
+          Address</label>
+        <label>
+          <input type="checkbox" name="sex" value="sex">
+          Sex</label>
+        <label>
+          <input type="checkbox" name="colorCheckbox" value="dob">
+          Dob</label>
+        <label>
+          <input type="checkbox" name="colorCheckbox" value="comment">
+          Comments</label>
+      </div>
+    </div>
   </div>
-  
-  
-
+  <div class="row">
+    <div class="firstname box">
+      <label> FirstName </label>
+      <br>
+      <input type="text">
+    </div>
+    <div class="lastname box">
+      <label> Lastname </label>
+      <br>
+      <input type="text">
+    </div>
+    <div class="address box">
+      <label> Address </label>
+      <br>
+      <input type="text">
+    </div>
+    <div class="sex box">
+      <label> Lastname </label>
+      <br>
+      <input type="text">
+    </div>
+    <div class="dob box">
+      <label> Dob </label>
+      <br>
+      <input type="radio">
+    </div>
+    <div class="comment box">
+      <label> Address </label>
+      <br>
+      <textarea class="form-control" rows="5" id="comment"></textarea>
+    </div>
+  </div>
 </div>
-
-
-
-
-	</div>
 </body>
 </html>

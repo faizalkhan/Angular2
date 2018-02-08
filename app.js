@@ -1,13 +1,32 @@
 (function()
 {
+    var Class = ng.core.Class;
     var Component = ng.core.Component;
     var NgModule = ng.core.NgModule;
     var BrowserModule = ng.platformBrowser.BrowserModule
     var PlatformBrowserDynamic =  ng.platformBrowserDynamic.platformBrowserDynamic;
     
-    var AppComponent= Component({
+    var quoteServiceId =1;
+    
+    var QuoteService = Class({
+      
+      constructor: function QuoteService(){
+          this.id = quoteServiceId++; 
+          this.quote = sampleQuotes;     
+      },
+      
+      getRandomQuotes : function QuoteService()
+      {
+          console.log(this.id +  ' quote service')
+          var randomIndex = Math.floor(Math.random() * this.quote.length);
+          return  this.quote[randomIndex];
+      }
+  
+  })
+    
+      var AppComponent= Component({
         selector : 'my-app',
-        template : '<h1> Random Quotes </h1>' + '<random-quote></random-quote>'
+        template : '<h1> Random Quotes </h1>' + '<random-quote></random-quote>' + '<random-quote></random-quote>'
     })
     .Class({
         constructor: function(){
@@ -20,17 +39,23 @@
         template : '<p><em>{{quote.line}}</em> - {{quote.author}}</p>'
     })
     .Class({
-        constructor: function(){
-            var randomIndex = Math.floor(Math.random() * quotes.length);
-            this.quote = quotes[randomIndex];
-        }
+        constructor: [QuoteService, function RandomQuoteComponent(QuoteService){ 
+            //var randomIndex = Math.floor(Math.random() * quotes.length);
+            //this.quote = quotes[rand omIndex];
+            
+            //var quoteService = new QuoteService();
+            this.quote = QuoteService.getRandomQuotes();
+             
+        }] 
     })
     
     var AppModule = NgModule({
         
         imports : [BrowserModule],
         declarations : [AppComponent,RandomQuoteComponent],
+        providers : [QuoteService],
         bootstrap : [AppComponent]
+    
         
     })
     .Class({
@@ -45,7 +70,7 @@
   PlatformBrowserDynamic().bootstrapModule(AppModule);
     
     
-     var quotes = [
+     var sampleQuotes = [
     {
       "line": "Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.",
       "author": "Brian W. Kernighan"
