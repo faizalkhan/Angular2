@@ -6,27 +6,43 @@
     var BrowserModule = ng.platformBrowser.BrowserModule
     var PlatformBrowserDynamic =  ng.platformBrowserDynamic.platformBrowserDynamic;
     
-    var quoteServiceId =1;
-    
     var QuoteService = Class({
       
       constructor: function QuoteService(){
-          this.id = quoteServiceId++; 
-          this.quote = sampleQuotes;     
+              this.quote = sampleQuotes;     
       },
       
-      getRandomQuotes : function QuoteService()
+      getRandomQuotes : function()
       {
-          console.log(this.id +  ' quote service')
-          var randomIndex = Math.floor(Math.random() * this.quote.length);
+          var randomIndex = Math.floor(Math.random() * this.quote.length);  
           return  this.quote[randomIndex];
+      },
+        
+      generateRandomQuotes : function(delay, callback)
+      {
+          var self = this;
+          callback(this.getRandomQuotes());
+          
+            setInterval(function()
+            {
+               callback(self.getRandomQuotes());
+                
+            }, delay);
+            
       }
   
   })
     
+
+        
+        
+        
+    
+    
+    
       var AppComponent= Component({
         selector : 'my-app',
-        template : '<h1> Random Quotes </h1>' + '<random-quote></random-quote>' + '<random-quote></random-quote>'
+        template : '<h1> Random Quotes </h1>' + '<random-quote></random-quote>'
     })
     .Class({
         constructor: function(){
@@ -40,12 +56,18 @@
     })
     .Class({
         constructor: [QuoteService, function RandomQuoteComponent(QuoteService){ 
-            //var randomIndex = Math.floor(Math.random() * quotes.length);
-            //this.quote = quotes[rand omIndex];
-            
-            //var quoteService = new QuoteService();
-            this.quote = QuoteService.getRandomQuotes();
+          var self = this;
+          
+          QuoteService.generateRandomQuotes(2000, function(quote)
+           {
+              self.quote = quote;
+              
+          });
              
+             // this.quote = QuoteService.getRandomQuotes(); 
+            // this.quote = QuoteService.getRandomQuotes(); 
+            
+            
         }] 
     })
     
@@ -53,7 +75,10 @@
         
         imports : [BrowserModule],
         declarations : [AppComponent,RandomQuoteComponent],
-        providers : [QuoteService],
+        providers : [
+            {provide: QuoteService, useClass : QuoteService }
+        
+        ],
         bootstrap : [AppComponent]
     
         
