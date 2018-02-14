@@ -1,12 +1,8 @@
-(function()
+(function(appz)
 {
     var Class = ng.core.Class;
-    var Component = ng.core.Component;
-    var NgModule = ng.core.NgModule;
-    var BrowserModule = ng.platformBrowser.BrowserModule
-    var PlatformBrowserDynamic =  ng.platformBrowserDynamic.platformBrowserDynamic;
     
-    var QuoteService = Class({
+    appz.QuoteService = Class({
       
       constructor: function QuoteService(){
               this.quote = sampleQuotes;     
@@ -32,69 +28,7 @@
       }
   
   })
-    
 
-        
-        
-        
-    
-    
-    
-      var AppComponent= Component({
-        selector : 'my-app',
-        template : '<h1> Random Quotes </h1>' + '<random-quote></random-quote>'
-    })
-    .Class({
-        constructor: function(){
-            
-        }
-    })
-    
-       var RandomQuoteComponent= Component({
-        selector : 'random-quote',
-        template : '<p><em>{{quote.line}}</em> - {{quote.author}}</p>'
-    })
-    .Class({
-        constructor: [QuoteService, function RandomQuoteComponent(QuoteService){ 
-          var self = this;
-          
-          QuoteService.generateRandomQuotes(2000, function(quote)
-           {
-              self.quote = quote;
-              
-          });
-             
-             // this.quote = QuoteService.getRandomQuotes(); 
-            // this.quote = QuoteService.getRandomQuotes(); 
-            
-            
-        }] 
-    })
-    
-    var AppModule = NgModule({
-        
-        imports : [BrowserModule],
-        declarations : [AppComponent,RandomQuoteComponent],
-        providers : [
-            {provide: QuoteService, useClass : QuoteService }
-        
-        ],
-        bootstrap : [AppComponent]
-    
-        
-    })
-    .Class({
-        
-        constructor :function()
-        {
-            
-        }
-        
-    });
-    
-  PlatformBrowserDynamic().bootstrapModule(AppModule);
-    
-    
      var sampleQuotes = [
     {
       "line": "Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.",
@@ -139,4 +73,4 @@
   ];
     
     
-})();
+})(window.appz || (window.appz = {}));
